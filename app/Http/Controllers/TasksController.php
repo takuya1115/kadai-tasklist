@@ -73,9 +73,10 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        if (\Auth::check()){
-            
-            $task=Task::findOrFail($id);
+        
+        $task=Task::findOrFail($id);
+        
+        if (\Auth::id() === $task->user_id){
         
             return view("tasks.show",["task"=>$task]);
         }
@@ -92,9 +93,11 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        if (\Auth::check()){
-            $task=Task::findOrFail($id);
         
+        $task=Task::findOrFail($id);
+        
+        if (\Auth::id() === $task->user_id){
+            
             return view("tasks.edit",["task"=>$task]);
         }
         
